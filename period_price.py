@@ -1,12 +1,14 @@
 from datetime import date, timedelta
 from urllib.request import urlopen
 from dateutil import rrule
-import matplotlib.pyplot as plt
+import os
 import datetime
-import pandas as pd
-import numpy as np
 import json
 import time
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
 
 # Get period price of single stock
 # Then output as chart
@@ -34,20 +36,33 @@ def craw_stock(stock_num, start_month):
 
     return result
     
+def draw_chart(df):
+    df['收盤價'] = df['收盤價'].astype(float)
+    df.loc[:]['收盤價'].plot(figsize=(9, 4))
+    plt.xlabel('month')
+    plt.ylabel('stock')
+    plt.show()
 
-df = craw_stock(2330, '2019-1-1')
+def save_as_csv(filename, df):
+    folder_name = 'period_price'
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
+    df.to_csv(os.path.join(folder_name, filename), encoding='utf_8_sig')
+     
+
+# Get TSMC as example, from 2019/1/1 to Today
+df = craw_stock(2330, '2019-9-1')
 print(df)
 df.set_index('日期', inplace=True)
 print(df)
 
-df['收盤價'] = df['收盤價'].astype(float)
-df.loc[:]['收盤價'].plot(figsize=(9, 4))
-plt.xlabel('month')
-plt.ylabel('stock')
-plt.show()
-
+# Drop some information
 df = df.drop(['成交金額'], axis=1)
 df = df.drop(['成交股數'], axis=1)
 print(df)
 
-df.to_csv('tsmc.csv', encoding='utf_8_sig')
+# Plot the price chart
+draw_chart(df)
+
+#Save as .csv file
+save_as_csv('tsmc.csv', df)
