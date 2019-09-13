@@ -8,6 +8,9 @@ import numpy as np
 import json
 import time
 
+# Get period price of single stock
+# Then output as chart
+
 def craw_one_month(stock_num, date):
     url = ("http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date="+
         date.strftime('%Y%m%d')+
