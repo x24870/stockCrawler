@@ -9,6 +9,7 @@ requests = "*"
 bs4 = "*"
 matplotlib = "*"
 lxml = "*"
+"html5lib" = "*"
 
 [dev-packages]
 pylint = "*"
