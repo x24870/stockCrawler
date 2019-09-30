@@ -10,6 +10,8 @@ bs4 = "*"
 matplotlib = "*"
 lxml = "*"
 "html5lib" = "*"
+ipython = "*"
+"jinja2" = "*"
 
 [dev-packages]
 pylint = "*"
